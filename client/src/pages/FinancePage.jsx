@@ -28,14 +28,14 @@ function FinancePage () {
         }
     ];
     return (
-        <div className="p-6 lg:p-10 w-full md:max-w-screen-xl">
+        <div className="p-6 lg:p-10 w-full md:max-w-screen-xl justify-center">
             <h1 className="text-3xl font-bold text-gray-900 mb-2 ">สรุปการเงิน</h1>
             <p className="text-gray-600 mt-3">ติดตามรายรับรายจ่ายของการเช่า</p>
             
             {/* ส่วนที่ 1: Stat Cards สรุปตัวเลขสำคัญ */}
         <div className="grid grid-cols-1 gap-6 mb-8 md:grid-cols-3 mt-8 ">
             {financeStats.map((stat) => (
-        <FinanceStatCard 
+        <FinanceStatCard
             key={stat.title + stat.value} // ใช้ key ที่เหมาะสม
             title={stat.title}
             value={stat.value}

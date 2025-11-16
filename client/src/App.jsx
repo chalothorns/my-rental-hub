@@ -5,6 +5,7 @@ import DashboardPage from './pages/DashboardPage';
 import Sidebar from './components/Layout/Sidebar';
 import MobileNavBar from './components/Layout/MobileNavBar';
 import FinancePage from './pages/FinancePage';
+import MessagePage from './pages/MessagePage';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Routes>
               <Route path="/" element={<DashboardPage />} />
               <Route path="/finance" element={<FinancePage />} />
+              <Route path="/messages" element={<MessagePage />} />
             </Routes>
               </div>
             </main>

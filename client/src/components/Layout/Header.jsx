@@ -1,7 +1,6 @@
 // client/src/components/Layout/Header.jsx
 
 import React from 'react';
-import { PanelLeftClose } from 'lucide-react'; 
 
 const Header = () => {
     return (
