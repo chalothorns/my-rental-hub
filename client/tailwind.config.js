@@ -8,7 +8,7 @@ export default {
     extend: {
       colors: {
         'custom-blue': '#53b8e0'
-      
+
     },
   },
 },

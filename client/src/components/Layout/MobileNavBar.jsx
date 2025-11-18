@@ -9,7 +9,7 @@ const navItems = [
         { name: 'แดชบอร์ด', icon: Home, link: '/'},
         { name: 'ผู้เช่า', icon: Users, link: '/tenants'},
         { name: 'มิเตอร์', icon: Gauge, link: '/meters'},
-        { name: 'แจ้งซ่อม', icon: Wrench, link: '/repairs'},
+        { name: 'แจ้งซ่อม', icon: Wrench, link: '/maintenance'},
         { name: 'ข้อความ', icon: Send, link: '/messages'},
         { name: 'การเงิน', icon: TrendingUp, link: '/finance'},
 ];

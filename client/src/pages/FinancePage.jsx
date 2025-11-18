@@ -28,7 +28,7 @@ function FinancePage () {
         }
     ];
     return (
-        <div className="p-6 lg:p-10 w-full md:max-w-screen-xl justify-center">
+        <div className="p-6 lg:p-10 min-h-screen lg:max-w-5xl 2xl:max-w-7xl justify-center">
             <h1 className="text-3xl font-bold text-gray-900 mb-2 ">สรุปการเงิน</h1>
             <p className="text-gray-600 mt-3">ติดตามรายรับรายจ่ายของการเช่า</p>
             
@@ -53,7 +53,7 @@ function FinancePage () {
             </div>
             
             {/* ส่วนที่ 3: ตารางสรุปรายการ (Table) */}
-            <div className="bg-white shadow-lg rounded-xl p-6 border border-gray-200 mb-14">
+            <div className="bg-white shadow-lg rounded-xl p-6 border border-gray-200 mb-14 md:mb-4">
                 {/* 💡 Q3: คุณจะใช้โครงสร้างตารางคล้ายกับ UpcomingBillsTable เพื่อแสดงรายการ รายรับ/รายจ่าย ล่าสุดอย่างไร? */}
                 <ExpenseTable />
             </div>

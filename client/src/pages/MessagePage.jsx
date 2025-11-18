@@ -9,12 +9,12 @@ import RecipientSelector from '../components/Message/RecipientSelector';
 const MessagePage = () => {
     return (
         /*max-w-7xl เพื่อจำกัดความกว้างของจอ และง่ายต่อการจัดวางองค์ประกอบข้างใน*/ 
-        <div className="flex flex-col gap-6 p-4 md:p-8 min-h-screen md:max-w-7xl mb-20 md:mb-0"> 
+        <div className="flex flex-col  gap-6 p-4 md:p-8 min-h-screen md:max-w-7xl mb-20 md:mb-0"> 
             <h1 className="text-3xl font-bold text-gray-900 ">ส่งข้อความ </h1>
-            <p className= "text-gray-500 -mt-1">ส่งข้อความถึงผู้เช่าทั้งหมด</p>
+            <p className= "text-gray-500 -mt-3">ส่งข้อความถึงผู้เช่าทั้งหมด</p>
 
             {/* Layout หลักใช้ Grid หรือ Flexbox เพื่อจัดองค์ประกอบ */}
-            <div className="space-y-6 md:w-2/3 md:mx-auto bg-white p-6 rounded-xl shadow-lg border border-gray-200"> {/* ใช้ space-y-6 จัดช่องว่างระหว่าง Component max-w ใช้ค่านี้เพื่อจำกัดความกว้าง mx-auto อันนี้คือให้ระบบ auto margin ซ้ายขวาให้*/}
+            <div className="space-y-6 md:w-2/3 md:ml-6  bg-white p-6 rounded-xl shadow-lg border border-gray-200"> {/* ใช้ space-y-6 จัดช่องว่างระหว่าง Component max-w ใช้ค่านี้เพื่อจำกัดความกว้าง mx-auto อันนี้คือให้ระบบ auto margin ซ้ายขวาให้*/}
                 
                 {/* 1. ส่วนฟอร์มข้อความ */}
                 <MessageForm /> 

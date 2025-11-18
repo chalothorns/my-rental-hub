@@ -6,6 +6,8 @@ import Sidebar from './components/Layout/Sidebar';
 import MobileNavBar from './components/Layout/MobileNavBar';
 import FinancePage from './pages/FinancePage';
 import MessagePage from './pages/MessagePage';
+import MaintenancePage from './pages/MaintenancePage';
+
 
 function App() {
   return (
@@ -33,6 +35,7 @@ function App() {
               <Route path="/" element={<DashboardPage />} />
               <Route path="/finance" element={<FinancePage />} />
               <Route path="/messages" element={<MessagePage />} />
+              <Route path="/maintenance" element={<MaintenancePage />} />
             </Routes>
               </div>
             </main>
