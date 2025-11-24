@@ -1,80 +1,166 @@
 // src/components/Message/MaintenanceHistory.jsx
 
-import React from 'react';
-import { FaClock, FaChevronDown } from 'react-icons/fa'; // ไอคอนนาฬิกาสำหรับประวัติ
+import React, {  useState, useRef, useEffect } from 'react';
+import { FaClock } from 'react-icons/fa'; // ไอคอนนาฬิกาสำหรับประวัติ
 
+const StatusDropdownCustom = ({ issue, onStatusChange}) => {
+    
+    
+    const statusOptions =[
+        {text: 'รอดำเนินการ', value: 'pending'},
+        {text: 'กำลังดำเนินการ', value:'in_progress'},
+        {text: 'เสร็จสิ้น', value:'completed'},
+        {text:'ยกเลิก', value:'cancelled'}
 
-// 💡 สร้าง Component ย่อยสำหรับการ์ดแต่ละใบ
-const IssueCard = ({ issue, onStatusChange }) => {
-    // ฟังก์ชันสำหรับกำหนดสีตามสถานะ
-    const getStatusClasses = (status) => {
-        switch (status) {
-            case 'Pending': return 'bg-red-100 text-red-700';
-            case 'In progress': return 'bg-yellow-100 text-yellow-700';
-            case 'Completed': return 'bg-green-100 text-green-700';
-            default: return 'bg-gray-100 text-gray-700';
-        }
+    ];
+
+    
+//  prop ที่ต้องกาต issue เพื่อเข้าถึง id และสถานะเดิม, onstatuschange ฟังชันอัปเดตสถานะ
+
+   //isOpen	ควบคุมว่า Dropdown เปิด หรือ ปิด อยู่
+    const [isOpen, setIsOpen] = useState(false);
+    //stagedStatus	สถานะใหม่ที่ ถูกเลือกแล้ว แต่ ยังไม่บันทึก
+    const [stagedStatus, setStagedStatus] = useState(issue.status);
+
+    const dropdownRef = useRef(null); //เอาไว้กันไม่ให้ของออกไปนอกพื้นหลัง
+
+    const getStatusText = (value) => {
+        const option = statusOptions.find(opt => opt.value === value);
+        return option ? option.text : 'ไม่ระบุสถานะ';
     };
-        // 💡 กำหนด URL รูปภาพ: ใช้ issue.imageUrl หรือ placeholder
-    const imageUrl = issue.imageUrl || 'https://via.placeholder.com/300x150?text=No+Image';
 
 
-     
+    const handleItemClick = (newStatusValue) => {
+        setStagedStatus(newStatusValue); //จำค่าใหม่ไว้
+        setIsOpen(false); //ปิดเมนู
 
-    return (
-        <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-4">
+    };
+
+    //สำคัญ** เอาไว้กดเปลี่ยนสถานะ จากค่าที่พักไว้เป็นค่าที่ต้องการบันทึก พอเลือกปุ๊บ dropdown ก็จะบันทึกค่าและปิด dropdown
+    const handleDisplayClick =()=>{
+        if(!isOpen && stagedStatus !== issue.status){
+            //บันทึก/อัปเดตสถานะจริง! (เรียก Prop function)
+            onStatusChange(issue.id, stagedStatus)
+        }
+        setIsOpen(!isOpen); // สลับเปิด/ปิด
+        };
+
+
+        // 3. 🟢 Hook สำหรับจัดการการคลิกนอกพื้นที่ (เพื่อปิด Dropdown)
+    // จำเป็นต้องมี useEffect เข้ามา
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+          if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+            setIsOpen(false);
+          }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    // 💡 กำหนด URL รูปภาพ: ใช้ issue.imageUrl หรือ placeholder
+const imageUrl =
+  issue.imageUrl instanceof File
+    ? URL.createObjectURL(issue.imageUrl)
+    : issue.imageUrl;
+
+
+
+<StatusDropdownCustom 
+  key={issue.id} 
+  issue={issue}
+  onStatusChange={onStatusChange}
+/>
+
+
+     return (
+        <div className="bg-white rounded-xl shadow-lg border border-gray-200 transition duration-300 hover:shadow-xl">
+            
+
             {/* 💡 ส่วนรูปภาพ  */}
-            <div className="h-32 bg-gray-200 rounded-lg mb-3">
+            {/* ใส่ overflow-hidden เพื่อบอกว่า เนื้อหาที่เกินขอบเขตของ Element นี้ จะต้องถูกซ่อน */}
+            <div className="h-56 bg-gray-200  mb-3 overflow-hidden">
+                {imageUrl ? (
                 <img 
-                    src={imageUrl} 
-                    alt={issue.title} 
+                    src={imageUrl}
+                    alt={issue.title}
                     className="w-full h-full object-cover" 
                 />
+                ) : (
+                    <div className="w-full h-full flex justify-center items-center text-gray-400">
+      ไม่มีรูปภาพ
+    </div>
+  )}
+
             </div>
             
-            <div className="p-4">
-
-                {/* 2. หัวข้อและการจัดการสถานะ */}
-                <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-lg font-semibold mb-1">{issue.title}</h3>
             
-                  {/* สถานะและ Dropdown  */}
-                    <select
-                        name="status"
-                        value={issue.status}
-                        // เรียกฟังก์ชันที่ส่งมาจากแม่เมื่อมีการเปลี่ยนแปลง
-                        onChange={(e) => {
-                              const newStatus = e.target.value;
-                              // 🟢 เรียก Prop function, ส่ง ID และสถานะใหม่กลับไป
-                              onStatusChange(issue.id, newStatus);
-                }}
-                        className={`text-xs font-semibold px-2 py-0.5 rounded-full appearance-none pr-6 cursor-pointer border border-gray-300 ${getStatusClasses(issue.status)}`}
-                    >
-                        <option value="">สถานะ</option>
-                        <option value="pending">รอดำเนินการ</option>
-                        <option value="in progress">กำลังดำเนินการ</option>
-                        <option value="completed">เสร็จสิ้น</option>
-                        <option value="cancelled">ยกเลิก</option>
+            <div className="p-4">
+            
 
-                        {/* ตัวเลือกห้อง เช่น <option value="Room 101">Room 101</option> */}
-                    </select>
+                {/* 2. หัวข้อและการจัดการสถานะ // min-w-0 ใช้เพื่อให้มันยอมบีบความกว้างลงและไม่ให้มันดัน element ข้างๆ truncate เอาไว้ใช้เมื่อ element แม่มีความกว้างจำกัด*/}
+                <div className="flex justify-between items-start mb-2 ">
+
+                    <h3 className="text-lg font-semibold mb-1 min-w-0 truncate">{issue.title}</h3>
+                
+
+                <div className="relative inline-block  " ref={dropdownRef}>
+                
+                  {/* สถานะและ Dropdown  */}
+                <button className={`text-lg font-semibold  ${getStatusClasses(stagedStatus)}`}
+                onClick={handleDisplayClick}>
+                    {getStatusText(stagedStatus)} {stagedStatus !== issue.status}
+                </button>
+                
+
+
+                {isOpen &&(
+                    <ul className="absolute z-10 bg-white border border-gray-300 rounded-xl shadow-lg mt-1 w-full min-w-[100px] md:min-w-[150px] right-0"> 
+                        {statusOptions.map(option => (
+                            //mx = margin x แนวนอน เปนการลบค่าขอบนอกในแนวนอน
+                            <li 
+                            key={option.value}
+                            className="text-gray-600  cursor-pointer p-2 md:p-3 hover:bg-[#e1fcea] hover:rounded-xl my-1 mx-1" 
+                            onClick={() => handleItemClick(option.value)}>
+                                {option.text}
+                            </li>
+                        ))}
+                    </ul>
+                )}
                 </div>
+            </div>
 
             {/* รายละเอียด */}
-            <p className="text-sm text-gray-600">{issue.room}</p>
-            <p className="text-xs text-gray-500 mt-1 mb-2">{issue.description}</p>
+            <p className="text-base text-gray-600">{issue.room}</p>
+            <p className="text-base text-gray-500 mt-3 mb-2 line-clamp-3 block">{issue.description}</p>
             
 
             
             {/* วันที่แจ้ง */}
-            <p className="text-xs text-gray-400 mt-2">แจ้งเมื่อ: {issue.date}</p>
+           
+            <p className="text-sm text-gray-400 mt-2 ">แจ้งเมื่อ: {issue.date}</p>
           </div>
         </div>
     );
 };
 
+const getStatusClasses = (statusValue) => {
+    switch (statusValue) {
+        case 'completed':
+            return 'bg-green-100 text-green-700 hover:bg-green-200';
+        case 'in_progress':
+            return 'bg-blue-100 text-blue-700 hover:bg-blue-200';
+        case 'pending':
+            return 'bg-yellow-100 text-yellow-700 hover:bg-yellow-200';
+        case 'cancelled':
+            return 'bg-red-100 text-red-700 hover:bg-red-200';
+        default:
+            return 'bg-gray-100 text-gray-700 hover:bg-gray-200';
+    }
+};
 
-const MaintenanceHistory = ({ issues }) => {
+
+const MaintenanceHistory = ({ issues, onStatusChange }) => {
     return (
         <div className="mt-8">
 
@@ -88,11 +174,14 @@ const MaintenanceHistory = ({ issues }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {issues.length > 0 ? (
                     issues.map((issue) => (
-                        <IssueCard key={issue.id} issue={issue} />
+                        <StatusDropdownCustom key={issue.id} 
+                        issue={issue}
+                        onStatusChange={onStatusChange}
+                         />
                     ))
                 ) : (
                     <p className="text-gray-500 col-span-full">ยังไม่มีประวัติการแจ้งซ่อม
-                    <FaClock className="w-6 h-6 inline mr-2" />
+                    <FaClock className="w-6 h-6 inline mr-2 ml-2" />
                     </p>
                 )}
             </div>
@@ -101,3 +190,5 @@ const MaintenanceHistory = ({ issues }) => {
 };
 
 export default MaintenanceHistory;
+
+// focus:ring-2 focus:ring-custom-blue focus:outline-none focus:ring-offset-2

@@ -80,7 +80,7 @@ const ReportIssues = ({isOpen, onClose, onSave}) => {
             return;
         }
          //ส่ง form ไปที่ parent
-        onSave({...formData, files: uploadedFiles});
+        onSave({...formData, imageFile: uploadedFiles[0]?.file || null});
 
         // เคลียร์ form หลังจากส่ง
         setFormData({room:'', title:'', description:''});

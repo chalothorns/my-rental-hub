@@ -2,35 +2,60 @@ import React, {useState} from 'react';
 
 import ReportIssues from '../components/Maintenance/ReportIssues';
 import MaintenanceHistory from '../components/Maintenance/MaintenanceHistory';
+import { FaPlus } from 'react-icons/fa';
 
 
 const MaintenancePage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [maintenanceIssues, setmaintenanceIssues] = useState([]);
+    const [maintenanceIssues, setMaintenanceIssues] = useState([
+    // ...
+    // { id: '1', room: 'Room 101', title: 'Leaking Faucet', status: 'pending', description: '...', date: '...', imageUrl: '' },
+    // { id: '2', room: 'Room 203', title: 'AC Not Cooling', status: 'in_progress', description: '...', date: '...', imageUrl: '' }
+    // ...
+]);
 
     //function เอาไว้เปิด/ปิด modal
     const handleToggleForm = () => {
         setIsModalOpen(!isModalOpen); //ใช้ !isModalOpen เพื่อสลับค่าจาก true เป็น false หรือ false เป็น true
     };
-    // ฟังก์ชันนี้เก็บไว้เผื่อปุ่ม 'ยกเลิก' ใน Form
-    const handleCloseForm = () => setIsModalOpen(false);
 
 
-    //function เพิ่มปัญหา
+
+
+    //ข้อมูลบน card issue history
     const handleAddNewIssue = (formData) => {
         //1.รวมข้อมูลที่ได้จาก form(dataForm) เข้ากับข้อมูลที่จำเป็นอื่นๆ
         const newIssue ={
             ...formData, // ข้อมูลที่มาจาก ReportIssues.jsx
-            id:Date.now(),
-            status:'Pending',
-            date: new Date().toLocaleDateString('th-TH', {day:'2-digit', month:'short', year:'numeric'})
+            id: Date.now().toString(),
+            status:'pending',
+            date: new Date().toLocaleDateString('th-TH', {day:'2-digit', month:'short', year:'numeric'}),
+            imageUrl: formData.imageFile || ""
 
         };
 
-         
-    setmaintenanceIssues([newIssue, ...maintenanceIssues]);
-    handleCloseForm();
+        setMaintenanceIssues(prevIssues => [newIssue, ...prevIssues]);
+        setIsModalOpen(false); // ปิด Modal หลัง Save
     };
+
+    const handleStatusChange = (id, newStatus) => {
+        // 🟢 ตรวจสอบว่า id และ newStatus ถูกส่งมาถูกต้อง
+        console.log(`Updating ID: ${id} to Status: ${newStatus}`); 
+        
+        setMaintenanceIssues(prevIssues => 
+            prevIssues.map(issue => {
+                // 1. ตรวจสอบว่า ID ตรงกันหรือไม่
+                if (String(issue.id) === String(id)) {
+                    // 2. ถ้าตรงกัน ให้คืนค่า Object ใหม่พร้อมสถานะที่ถูกเปลี่ยน
+                    return { ...issue, status: newStatus };
+                }
+                // 3. ถ้าไม่ตรงกัน ให้คืนค่า Object เดิม
+                return issue;
+            })
+        );
+    };
+
+
 
 
     return (
@@ -65,7 +90,11 @@ const MaintenancePage = () => {
                 
             
             {/* 3.ประวัติการแจ้งซ่อม */}
-                <MaintenanceHistory issues={maintenanceIssues} />
+                <MaintenanceHistory
+                         issues={maintenanceIssues} 
+                onStatusChange={handleStatusChange}
+                
+                />
             
                 
         </div>
