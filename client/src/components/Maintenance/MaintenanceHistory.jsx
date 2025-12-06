@@ -147,13 +147,13 @@ const imageUrl =
 const getStatusClasses = (statusValue) => {
     switch (statusValue) {
         case 'completed':
-            return 'bg-green-100 text-green-700 hover:bg-green-200';
+            return 'bg-[#9FDFBA] text-[#293545] hover:bg-[#ace6c4]';
         case 'in_progress':
-            return 'bg-blue-100 text-blue-700 hover:bg-blue-200';
+            return 'bg-[#F5DA89] text-[#293545] hover:bg-[#f7de96]';
         case 'pending':
-            return 'bg-yellow-100 text-yellow-700 hover:bg-yellow-200';
+            return 'bg-blue-300 text-[#293545] hover:bg-blue-200';
         case 'cancelled':
-            return 'bg-red-100 text-red-700 hover:bg-red-200';
+            return 'bg-[#E8867D] text-[#FFFFFF] hover:bg-[#e79088]';
         default:
             return 'bg-gray-100 text-gray-700 hover:bg-gray-200';
     }

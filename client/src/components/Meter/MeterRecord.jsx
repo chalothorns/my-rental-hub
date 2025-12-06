@@ -1,10 +1,10 @@
 // client/src/components/Meter/MeterRecord.jsx
 
-import React, { useState } from 'react';
+import React from 'react';
 
-const MeterRecord = ({record, activeTab, onRecordChange, onDelete}) => {
+const MeterRecord = ({record, activeTab, onRecordChange, onDeleteCheck}) => {
 
-    const [showConfirm, setShowConfirm] = useState(false);
+    
     
     const prevField = activeTab === 'electric' ? 'prevElectric' : 'prevWater';
     const currentField = activeTab === 'electric' ? 'currentElectric' : 'currentWater';
@@ -21,85 +21,61 @@ const MeterRecord = ({record, activeTab, onRecordChange, onDelete}) => {
 
     // 🟢 3. Handler หลักเมื่อกดปุ่ม 'X'
     const handleDeleteClick = () => {
-        if (hasData) {
-            // ถ้ามีข้อมูล: แสดง Pop-up ยืนยัน
-            setShowConfirm(true);
-        } else {
-            // ไม่มีข้อมูล: ลบทันที
-            onDelete(record.id);
-        }
+        // ส่ง ID ของแถว และสถานะ hasData กลับไปให้ MeterPage จัดการ Modal
+        onDeleteCheck(record.id, hasData); 
     };
     
-    // 🟢 4. Handler เมื่อผู้ใช้ยืนยันการลบใน Pop-up
-    const handleConfirmDelete = () => {
-        onDelete(record.id);
-        setShowConfirm(false);
-    };
 
  return (
-        <tr className="border-b hover:bg-gray-50">
+    
+    
+        <tr className="border-b hover:bg-gray-50 ">
             {/* 1. ห้อง */}
-            <td className="p-3 text-sm font-semibold">{record.room}</td>
+            <td className=" p-3 text-sm font-semibold">{record.room}</td>
             
             {/* 2. ผู้เช่า */}
-            <td className="p-3 text-sm text-gray-700">{record.name}</td>
+            <td className=" p-3 text-base text-gray-700">{record.name}</td>
             
             {/* 3. ครั้งก่อน (Read-Only) */}
-            <td className="p-3">
+            <td className="p-3 w-40">
                 <input
                     type="number"
-                    value={record[prevField]} 
+                    value={record[prevField] || ''}
                     readOnly 
-                    className="w-20 px-2 py-1 text-sm text-center bg-gray-100 border border-gray-200 rounded-lg cursor-not-allowed focus:outline-none"
+                    onChange={() => {}}
+                    className="w-32 h-10 px-2 py-1 text-base text-left bg-gray-100 border border-gray-200 rounded-lg cursor-not-allowed focus:outline-none"
                 />
             </td>
             
             {/* 4. ครั้งนี้ (Input ที่แก้ไขได้) */}
-            <td className="p-3">
+            <td className="p-3 text-center">
                 <input
                     type="number"
                     value={record[currentField]}
                     onChange={(e) => onRecordChange(record.id, currentField, e.target.value)}
-                    placeholder="กรอกเลข"
-                    className="w-20 px-2 py-1 text-sm text-center border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                    placeholder="0"
+                    className="w-32 h-10 px-2 py-1 text-base text-left border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
                 />
             </td>
             
             {/* 5. หน่วยใช้ (Usage) */}
-            <td className="p-3 text-sm font-bold text-center text-blue-600">{usage}</td>
+            <td className="p-3 text-base font-medium text-center text-gray-800">{usage}</td>
             
-            {/* 6. ปุ่มลบ (ถ้ามี) */}
+            {/* 6. ปุ่มลบ  */}
             <td className="p-3 text-sm text-center relative">
                 <button
                 onClick={handleDeleteClick}
-                className="text-red-500 hover:text-red-700 transition font-bold">X</button>
+                className="text-gray-700 hover:text-[#fa8585] transition font-bold bg-white hover:bg-[#fa858544]">X</button>
 
-                {/* 🟢 5. Confirmation Pop-up (แสดงเมื่อ showConfirm เป็น true) */}
-                {showConfirm && (
-                    <div className="absolute top-0 right-0 z-10 p-2 text-xs bg-white border border-yellow-400 rounded-lg shadow-xl -mt-10 w-48 text-left">
-                        <p className="mb-1 font-semibold text-gray-700">ต้องการลบแถวนี้หรือไม่?</p>
-                        <p className="text-yellow-700 mb-2">มีข้อมูลมิเตอร์ปัจจุบันอยู่</p>
-                        
-                        <div className="flex justify-end space-x-2">
-                            {/* ปุ่มยกเลิก */}
-                            <button
-                                onClick={() => setShowConfirm(false)}
-                                className="px-2 py-1 text-xs text-gray-600 bg-gray-100 rounded hover:bg-gray-200 transition"
-                            >
-                                ยกเลิก
-                            </button>
-                            {/* ปุ่มยืนยัน */}
-                            <button
-                                onClick={handleConfirmDelete}
-                                className="px-2 py-1 text-xs text-white bg-red-500 rounded hover:bg-red-600 transition"
-                            >
-                                ยืนยัน
-                            </button>
-                        </div>
-                    </div>
-                )}
+
+
+           
+
+                
             </td>
         </tr>
+       
+        
     );
 };
 

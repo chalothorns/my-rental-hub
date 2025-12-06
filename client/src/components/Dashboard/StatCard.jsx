@@ -4,8 +4,8 @@ import { Home, CheckCircle, AlertCircle} from 'lucide-react';
 
 const StatCard = ({ title, count, description, buttonText, type }) => {
     // กำหนดสีตามประเภทการ์ด (ใช้สีตามรูปที่คุณต้องการ)
-    const baseColor = type === 'overdue' ? 'border-red-300 bg-[#fac7c729]':
-                      type === 'paid' ? 'border-[#96e2c2] bg-[#bafcd014]' :  
+    const baseColor = type === 'overdue' ? 'border-red-300 bg-[#F7F4F5]':
+                      type === 'paid' ? 'border-[#96e2c2] bg-bg-[#F3F8F8]' :  
                       'border-gray-300 bg-blue-50';
     
     
@@ -18,8 +18,8 @@ const buttonStyle =
         type === 'overdue' ? 
             'bg-[#fa8585] hover:bg-[#f89292]' : // สำหรับค้างชำระ (สีแดง)
         (type === 'paid' || type === 'total') ?  
-        'bg-[#62bee2] hover:bg-[#65c6ec] ' : // สำหรับชำระแล้วและทั้งหมด (สีฟ้า)
-        ''; // ค่าว่างเผื่อไว้ ถ้า type ไม่ตรงกับอันไหนเลย
+        'bg-[#67BBE4] hover:bg-[#65c6ec] ' : // สำหรับชำระแล้วและทั้งหมด (สีฟ้า)
+        ''; // ค่าว่างเผื่อไว้ ถ้า type ไม่ตรงกับอันไหนเลยr
 
     const countColor = type === 'overdue' ? 'text-red-400' : 
                        type === 'paid' ? 'text-black-700' : 'text-[#53b8e0]'

@@ -1,30 +1,39 @@
 // src/components/Meter/MeterRecordTable.jsx
-import React from 'react';
-import MeterRecord from './MeterRecord';
+// client/src/components/Meter/MeterRecordTable.jsx
 
-const MeterRecordTable = ({meterData, activeTab, onRecordChange, selectedMonth, onDeleteRecord}) =>{
+import React from 'react'; 
+import MeterRecord from './MeterRecord'; 
+import MobileMeterRecordTable from './MobileMeterRecordTable'; 
+
+
+
+const MeterRecordTable = ({meterData, activeTab, onRecordChange, selectedMonth, onDeleteCheck}) =>{
 
 
     return(
-        <div className="bg-white shadow-md rounded-lg p-4 mt-6 ">
 
-            <div className="overflow-x-auto">
-                <table className=" min-w-full divide-y divide-gray-200 text-gray-500 text-sm">
+        <div>
 
-                    {/* 🟢 ส่วนหัวตาราง (Thead) */}
+        {/* 💻 ตารางสำหรับ Desktop/Tablet: ซ่อนบน Mobile */}
+        <div className=" bg-white shadow-md rounded-lg p-4 mt-6 hidden md:block">
+
+            <div className="overflow-x-auto p-5">
+                <table className="min-w-full divide-y divide-gray-200 text-gray-500 text-sm ">
+
+
+                    {/* 🟢 ส่วนหัวตาราง (Thead) desktop */}
                     <thead>
                         <tr>
-                            <th>ห้อง</th>
-                            <th>ผู้เช่า</th>
+                            <th className="px-3 py-2 text-left">ห้อง</th>
+                            <th className="px-3 py-2 text-left">ผู้เช่า</th>
                             {/* 💡 Table Header จะแสดงผลเหมือนกัน แต่ข้อมูลในแถวจะต่างกัน */}
-                            <th>ครั้งก่อน({selectedMonth})</th>
-                            <th>ครั้งนี้</th>
+                            <th >ครั้งก่อน({selectedMonth})</th>
+                            <th className="px-3 py-2 text-center">ครั้งนี้</th>
                             <th>หน่วยที่ใช้</th>
                             <th>ลบ</th>
                             
                         </tr>
                     </thead>
-                    {/* 🟢 ส่วนเนื้อหาตาราง (Tbody): ต้องเป็น Sibling ของ Thead */}
                     <tbody>
                         {/* 🟢 วนลูปสร้างแถว */}
                         {meterData && meterData.map(record => (
@@ -33,16 +42,37 @@ const MeterRecordTable = ({meterData, activeTab, onRecordChange, selectedMonth, 
                                 record={record}
                                 activeTab={activeTab}
                                 onRecordChange={onRecordChange}
-                                onDelete={onDeleteRecord}
+                                onDeleteCheck={onDeleteCheck}
                             />
                         ))}
                     </tbody>
-
                 </table>
+               </div> 
             </div>
-        </div>
+               {/* 📱 2. MOBILE UI (Card List): ใช้ MobileMeterRecordTable และแสดงบน Mobile */}
+                <div className="mt-6 block md:hidden">
+                        {/* 🟢 วนลูปสร้างแถว */}
+                        {meterData && meterData.map(record => (
+                            <MobileMeterRecordTable
+                                key={record.id} // 💡 ต้องมี key!
+                                record={record}
+                                activeTab={activeTab}
+                                onRecordChange={onRecordChange}
+                                onDeleteCheck={onDeleteCheck}
+                                selectedMonth={selectedMonth}
+                            />
+                            
+                        ))}
+
+                        
+                    </div>
+
+                    
+            </div>
+            
 
     );
 };
+
 
 export default MeterRecordTable;

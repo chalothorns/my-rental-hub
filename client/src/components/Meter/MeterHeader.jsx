@@ -17,7 +17,7 @@ const MeterHeader = ({selectedMonth, selectedYear, onMonthChange, onYearChange})
             </h3>
 
             {/* 2.ส่วนรอบบิล(เดือน/ปี) */}
-            <div className="p-5 bg-[#74b0ce15] border border-[#CBEAF7] rounded-xl">
+            <div className="p-5 bg-[#F7FBFD]  border border-[#cfe7f1] rounded-xl">
                 <h3 className="text-sm font-semibold">รอบบิล(เดือน/ปี)</h3>
                 <div className="mt-4 mb-2 flex items-center">
                     {/* Input หรือ Dropdown สำหรับเตือน */}

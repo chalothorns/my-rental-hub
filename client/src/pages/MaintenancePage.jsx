@@ -60,7 +60,7 @@ const MaintenancePage = () => {
 
     return (
         /*max-w-7xl เพื่อจำกัดความกว้างของจอ และง่ายต่อการจัดวางองค์ประกอบข้างใน*/ 
-        <div className="flex flex-col  p-4 md:p-8 min-h-screen lg:max-w-5xl 2xl:max-w-7xl"> 
+        <div className="flex flex-col  p-4 md:p-8 min-h-screen lg:max-w-5xl 2xl:max-w-7xl mb-20 md:mb-10"> 
 
             {/* Header Area */}
             <div className="flex justify-between items-center w-full">
