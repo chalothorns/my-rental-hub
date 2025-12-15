@@ -2,11 +2,12 @@
 import React from 'react';
 import { Home, CheckCircle, AlertCircle} from 'lucide-react';
 
+//นี่คือการประกาศฟังชัน(component) ชื่อ statcard ค่าใน {} คือ props ที่รับมาจาก component แม่ที่เรียกใช้ statcard และสิ่งนี้คือการ destructuring ทำให้เราสามารถรับค่าพวกนี้มาได้ด้วยการเขียน key ตรงๆไม่ต้อง props.title เป็นต้น
 const StatCard = ({ title, count, description, buttonText, type }) => {
     // กำหนดสีตามประเภทการ์ด (ใช้สีตามรูปที่คุณต้องการ)
-    const baseColor = type === 'overdue' ? 'border-red-300 bg-[#F7F4F5]':
-                      type === 'paid' ? 'border-[#96e2c2] bg-bg-[#F3F8F8]' :  
-                      'border-gray-300 bg-blue-50';
+    const baseColor = type === 'overdue' ? 'border-red-300 bg-[#f8e7ed]':
+                      type === 'paid' ? 'border-[#96e2c2] bg-[#F3F8F8]' :  
+                      'border-gray-300 ';
     
     
     const IconComponent = 
@@ -25,7 +26,7 @@ const buttonStyle =
                        type === 'paid' ? 'text-black-700' : 'text-[#53b8e0]'
 
     return (
-        <div className={`bg-white  shadow-lg rounded-2xl p-6 border-2  ${baseColor} transition duration-300`}>
+        <div className={`shadow-lg rounded-2xl p-6 border-2  ${baseColor} transition duration-300`}>
             
             {/* 1. ส่วนเนื้อหาด้านบน (Title, Count, Icon) */}
             <div className="flex items-start justify-between ">
