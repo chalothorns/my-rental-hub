@@ -52,7 +52,7 @@ const MobileMeterRecordTable = ({
       <div className=" text-sm text-center ">
         <button
           onClick={handleDeleteClick}
-          className="bg-white text-gray-700 absolute top-2 right-2 font-bold hover:text-[#fa8585] transition hover:bg-[#fa858544]"
+          className="bg-white text-gray-700 absolute top-2 right-2 font-bold rounded-xl hover:text-[#fa8585] transition hover:bg-[#fa858544]"
         >
           X
         </button>

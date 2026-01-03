@@ -65,7 +65,7 @@ const MeterRecord = ({record, activeTab, onRecordChange, onDeleteCheck}) => {
             <td className="p-3 text-sm text-center relative">
                 <button
                 onClick={handleDeleteClick}
-                className="text-gray-700 hover:text-[#fa8585] transition font-bold bg-white hover:bg-[#fa858544]">X</button>
+                className="text-gray-700 rounded-xl hover:text-[#fa8585] transition font-bold bg-white hover:bg-[#fa858544]">X</button>
 
 
 

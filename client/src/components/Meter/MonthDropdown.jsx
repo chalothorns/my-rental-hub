@@ -45,8 +45,8 @@ const MonthDropdown =({selectedMonth, onMonthChange}) =>{
             {/* ปุ่มหลักที่แสดงเดือนที่ถูกเลือก */}
             <button
                 onClick={() =>setlsOpen(!isOpen)}
-                className="flex items-center justify-between w-32 px-3 py-2 text-base font-medium rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-custom-blue"
-            
+                className="flex items-center justify-between w-32 px-3 py-2 text-base font-medium rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-custom-blue focus:ring-offset-2"
+
             >
                 {selectedMonth}<ChevronDown className={`w-4 h-4 ml-2 transition-transform ${isOpen ? 'rotate-180':'rotate-0'}`}/>
             </button>

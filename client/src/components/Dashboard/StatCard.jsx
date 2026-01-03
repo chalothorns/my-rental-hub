@@ -4,12 +4,13 @@ import { Home, CheckCircle, AlertCircle} from 'lucide-react';
 
 //นี่คือการประกาศฟังชัน(component) ชื่อ statcard ค่าใน {} คือ props ที่รับมาจาก component แม่ที่เรียกใช้ statcard และสิ่งนี้คือการ destructuring ทำให้เราสามารถรับค่าพวกนี้มาได้ด้วยการเขียน key ตรงๆไม่ต้อง props.title เป็นต้น
 const StatCard = ({ title, count, description, buttonText, type }) => {
-    // กำหนดสีตามประเภทการ์ด (ใช้สีตามรูปที่คุณต้องการ)
+    // baseColor มีค่าข้างในเป็น string จึงไม่สามารถเรียกใช้งานแบบ <baseColor /> เราจะแยกมันด้วยการตั้งชื่อตัวอักษรแบบ pascal case/camel case
     const baseColor = type === 'overdue' ? 'border-red-300 bg-[#f8e7ed]':
                       type === 'paid' ? 'border-[#96e2c2] bg-[#F3F8F8]' :  
                       'border-gray-300 ';
     
     
+    // สามารถใช้ IconComponent ได้ แบบนีั <IconComponent /> เพราะมันคือ React Functional Component(ต้องเป็น Class หรือ Function เท่านั้น) ค่าข้างในกล่องนี้ มันมีค่าเป็น function
     const IconComponent = 
         type === 'overdue' ? AlertCircle  : // ⚠️ สำหรับค้างชำระ
         type === 'paid' ? CheckCircle :       // ✅ สำหรับชำระแล้ว
@@ -25,11 +26,13 @@ const buttonStyle =
     const countColor = type === 'overdue' ? 'text-red-400' : 
                        type === 'paid' ? 'text-black-700' : 'text-[#53b8e0]'
 
+    //จะเห็นได้ว่าด้านบน return เงื่อนไขส่วนใหญ่ การตัดสินใจใหญ่ๆเราจะอิงตามแต่ type อย่างเดียว การ์ดจะถูกสร้างกี่ใบก็อยุ่ที่ component แม่จะบอกว่ามีกี่ type
+
     return (
         <div className={`shadow-lg rounded-2xl p-6 border-2  ${baseColor} transition duration-300`}>
             
-            {/* 1. ส่วนเนื้อหาด้านบน (Title, Count, Icon) */}
-            <div className="flex items-start justify-between ">
+            {/* 1. ส่วนเนื้อหาด้านบน (Title, Count, Icon) อยู้ชิดซ้าย */}
+            <div className="flex items-start justify-between">
                 
                 {/* 1.1 Text Content (Title, Count, Description) */}
                 <div>
@@ -45,9 +48,9 @@ const buttonStyle =
                 
                
 
-            </div>
+            </div> 
             
-            {/* 2. ปุ่มอยู่ด้านล่างสุดของ Card */}
+            {/* Logical AND Operator ตรงนี้หมายถึง ถ้ามีตัวแปรใน buttonTextจริง ให้แสดงปุ่ม/โค้ดที่อยู่หลัง && ในที่นี้ buttonText มี 3 ค่าจริงแต่มีค่านึงเปน undefine จึงโชว์แค่ 2 อย่างและแสดงแค่2ปุ่ม */}
             {(buttonText) && (
         <button className={`mt-4 w-full py-2 text-white rounded-xl text-sm font-medium ${buttonStyle}`}> 
             {buttonText} 
@@ -55,6 +58,6 @@ const buttonStyle =
     )}
         </div>
     );
-};
+};  
 
 export default StatCard;

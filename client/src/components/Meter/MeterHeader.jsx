@@ -17,9 +17,9 @@ const MeterHeader = ({selectedMonth, selectedYear, onMonthChange, onYearChange})
             </h3>
 
             {/* 2.ส่วนรอบบิล(เดือน/ปี) */}
-            <div className="p-5 bg-[#F7FBFD]  border border-[#cfe7f1] rounded-xl">
+            <div className="p-5 bg-[#F7FBFD]   border border-[#cfe7f1] rounded-xl">
                 <h3 className="text-sm font-semibold">รอบบิล(เดือน/ปี)</h3>
-                <div className="mt-4 mb-2 flex items-center">
+                <div className="mt-4 mb-2 flex items-center ">
                     {/* Input หรือ Dropdown สำหรับเตือน */}
                     <MonthDropdown 
                         selectedMonth={selectedMonth}
@@ -33,7 +33,7 @@ const MeterHeader = ({selectedMonth, selectedYear, onMonthChange, onYearChange})
                         value={selectedYear} //สามารถใช้ state จาก meterpage มาแสดงผล
                         onChange={onYearChange} //ถ้าจะให้แก้ปีได้ ต้องมีฟังก์ชันนี้
                         placeholder="เช่น ปี 2025"
-                        className="px-3 py-2 w-32 rounded-xl ml-5 bg-gray-50 border border-gray-200 focus:ring-2 focus:ring-custom-blue focus:outline-none focus:ring-offset-2"
+                        className="px-3 py-2 w-32 rounded-xl ml-5 bg-gray-50 border border-gray-200 focus:ring-2 focus:ring-custom-blue focus:outline-non focus:border-gray-300 focus:ring-offset-2"
                         />
 
                         <span className="ml-5 text-sm text-gray-500 hidden md:block">
